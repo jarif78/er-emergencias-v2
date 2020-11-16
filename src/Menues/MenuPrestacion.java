@@ -1,7 +1,8 @@
 package Menues;
 
-import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
+import BaseClinica.Auxiliar;
 import BaseClinica.Especialidad;
 import BaseClinica.Paciente;
 import Prestaciones.Prestacion;
@@ -9,57 +10,64 @@ import Prestaciones.Turno;
 
 public class MenuPrestacion extends Menu {
 	
-	@SuppressWarnings({ "unused", "unchecked" })
+	@SuppressWarnings({ })
 	public static void display() {
 		Turno t = new Turno();
         int opcion;
-        String mensajeOpciones = "\n*****Prestaciones*****\nMenu Prestaciones: ->1) Prestacion ->2) Lista Prestaciones 3) Pago Prestaciones ->0) Salir \nEscriba opcion:";
+        String mensajeOpciones = "Menu Prestacion\n\n1) Prestacion \n2) Lista Prestaciones \n3) Pago Prestaciones \n0) Salir \n\nEscriba opcion:";
+        String[] array = {"1 - Prestacion", "2 - Lista Prestaciones", "3 - Pago Prestaciones", "0 - Salir"};
         
         while (true) {
-            System.out.print(mensajeOpciones);
-            opcion = scanner.nextInt();
-            switch (opcion) {
+    		
+        	Object o = Auxiliar.menuo(mensajeOpciones, "Menu Prestaciones", array);
+    		opcion = Auxiliar.n(o);
+            
+    		switch (opcion) {
             	case 1:
-            		c.mostrarEspecialidades();
             		boolean r = true;
             		int ide = 0;
-            		while(r) {
-                		System.out.print("ID Especialidad: "); ide = scanner.nextInt();
-            			r = !Especialidad.existeIdEspecialidad(ide);
-            		}
-            		LinkedList <Integer> idturnos = Prestacion.mostrarPrestacionesHoy(ide);
-            		System.out.print("Ingrese nro Turno: "); int idt = scanner.nextInt();
-            		if(idturnos.contains(idt)) {
-            			t = t.cargarTurnoconId(idt);
+            		o = Auxiliar.menuo("Atencion de pacientes\n\nSeleccione la especialidad a atender:                    ", "Prestaciones - Atencion a pacientes", c.mostrarEspecialidades());
+                	ide = Auxiliar.n(o);
+            		//LinkedList <Integer> idturnos = Prestacion.mostrarPrestacionesHoy(ide);
+            		o = Auxiliar.menuo("Atencion " + Especialidad.nombreAreaPorID(ide) + "\n\nSeleccione el turno a atender: ", "Prestaciones - Atencion a pacientes" , Prestacion.mostrarPrestacionesHoy(ide));
+            		int idt = Auxiliar.n(o);
+            		t = t.cargarTurnoconId(idt);
             			if(t.isEstudio()) {
-            				System.out.print("Confirma Prestacion s-n: "); 
-            				char sn = scanner.next().charAt(0);
-            				if(sn=='s') new Prestacion (t);
+                			ide = JOptionPane.showOptionDialog(null,"Confirma ", "Ingreso Turno - Autorizacion Sobreturno", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                			if(ide==0) new Prestacion (t);
             			} else {
             				System.out.print("Ingresar tratamiento/estudio/receta: "); 
             				String trat = datos.nextLine();
-            				new Prestacion(t, trat);
-            		}} else { System.out.println("No es valido el nro de turno ingresado");}
+            				new Prestacion(t, trat);}
             			
             		break;
             	case 2:
-            		c.mostrarPrestaciones();
+            		Auxiliar.advertencia("Listado de Prestaciones realizadas\n\n" + c.mostrarPrestaciones(), "Prestaciones - Reportes");
         		break;
                 case 3: 
             		r = true;
             		int dni = 0;
             		while(r) {
-                		System.out.print("Ingrese DNI: "); dni = scanner.nextInt();
+            			dni = Integer.parseInt(Auxiliar.menus("Prestaciones pendientes de abonar\n\nIngrese numero de DNI del paciente.\n\nDebe ingresarse el numero entero sin .(punto) ni , (coma):", "12345678"));
             			r = !Paciente.existeDNIPaciente(dni);
+            			if(r)Auxiliar.advertencia("El DNI no es correcto, intente nuevamente", "Ingreso turno - Error DNI no dado de alta");
             		}
-            			Prestacion.prestacionImpagaPorDni(dni);
-            			System.out.print("Ingrese Nro Prestacion a abonar: "); int nro = datos.nextInt();
+            			String [] resultado = Prestacion.prestacionImpagaPorDni(dni);
+            			if(resultado.length==0) {
+            				Auxiliar.advertencia("El paciente no tiene prestaciones impagas", "Prestaciones - Error paciente sin prestaciones impagas");
+            			} else {            			
+            			o = Auxiliar.menuo("Paciente : " + Paciente.nombrePacientexDni(dni) + "\n\nPrestaciones pendientes de pago del paciente:", "Prestaciones - Pago" , Prestacion.prestacionImpagaPorDni(dni));
+            			int nro = Auxiliar.n(o); 
             			Prestacion p = new Prestacion();
             			p = p.prestacionPorId(nro);
-            			System.out.println(p.getTratamiento());
-            			//datos;
-            			System.out.print("Ingrese forma de pago (Efectivo o Tarjeta): "); String pago = datos.nextLine();
+            			String [] opciones = {"Efectivo", "Tarjeta de credito"};
+            			nro = JOptionPane.showOptionDialog(null, "Paciente : " + Paciente.nombrePacientexDni(dni) + "\n\nSeleccione la forma de pago", "Prestaciones - Seleccion de pago", JOptionPane.DEFAULT_OPTION,
+            					JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
+            			String pago = "";
+            			if(nro == 0) pago = "Efectivo";
+            			else pago = "Tarjeta de credito";
             			p.setFormaPago(pago);
+            			}
             			break;
                 case 0: Menu.display();
                 default: System.out.println("Opcion no válida");

@@ -2,9 +2,12 @@ package BaseClinica;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
@@ -30,7 +33,7 @@ public class Auxiliar {
 		new Medico("Rocio Gonzalez", "Radiologo", 26658343, "02320-333333");
 		
 	    ArrayList<Integer> a = new ArrayList<>();
-	    Integer[] array = { 2, 3, 4, 5, 6 , 7 };
+	    Integer[] array = { 1, 3, 4, 5, 6 , 7 };
 	    Collections.addAll(a, array);
 
 	    ArrayList<Integer> b = new ArrayList<>();
@@ -92,16 +95,24 @@ public class Auxiliar {
 	public static int n (Object o){ 
 		int n = 0;
     	String a = (String) o;
-    	n = Integer.parseInt(a.substring(0, 1));
+    	n = Integer.parseInt(a.substring(0, a.indexOf(" ")));
 		return n;
 	} 
 	
-	public static Object menu1(String texto, String titulo, String [] array) {
-		Object o = JOptionPane.showInputDialog(null, texto, titulo + "  - Unpaz - POO", JOptionPane.QUESTION_MESSAGE,null, array, array[0]);
-		return o;
+	public static String menus(String texto, String pordefecto) {
+		 
+		return JOptionPane.showInputDialog(texto, pordefecto);
 	}
 
+	public static String hoyString() {
+		LocalDate hoyd = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return hoyd.format(formatter);
+	}
 	
+	public static void advertencia(String texto, String titulo) {
+		JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
 	
 }
 

@@ -2,6 +2,7 @@ package Menues;
 
 import java.util.ArrayList;
 
+import BaseClinica.Auxiliar;
 import BaseClinica.Especialidad;
 
 public class menuEspecialidad extends Menu {
@@ -79,7 +80,7 @@ public static boolean controlHora (String hora) {
 		if(h>=0&&h<24&&m>=0&&m<60&&s.equals(":")) {
 			auxHora = hora;
 			r = false;
-		} else 	System.out.print("La hora debe ingresarse en el siguiente rango 00:00 a 23:59: ");
+		} else 	Auxiliar.advertencia("La hora debe ingresarse en el siguiente rango 00:00 a 23:59\n\nReintentar ", "Ingreso Turno - Error fuera de rango horario");
 	} catch(Exception e) {
 		System.out.print("La hora debe ingresarse en el siguiente rango 00:00 a 23:59: ");
 			r = true;

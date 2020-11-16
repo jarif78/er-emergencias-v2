@@ -37,7 +37,7 @@ public class Paciente {
 				x = x +1;
 				alerta =  true;
 			}
-		} if(alerta) System.out.println("El paciente presenta " + x + " turnos sin asistir");
+		} if(alerta) Auxiliar.advertencia("El paciente presenta " + x + " turnos sin asistir", "Ingreso Turno - Control de asistencia de paciente");
 		
 	}
 	
@@ -46,7 +46,6 @@ public class Paciente {
         for(int x = 0; x < c.getListaPacientes().size(); x++ ) {
         	if(c.getListaPacientes().get(x).getDni()==dni) {
         		r = true;
-        		x = c.getListaPacientes().size();
         	}
         }
         return r;

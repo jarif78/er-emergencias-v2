@@ -1,6 +1,8 @@
 package BaseClinica;
 
 import java.util.ArrayList;
+
+import Menues.MenuTurno;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Especialidad extends AreaMedica{
 
@@ -146,7 +148,7 @@ public class Especialidad extends AreaMedica{
 		int mh = Integer.parseInt(horaFin.substring(3, 5));		// minuto final
 		if(ha>=hd&&ha<hh) r = true;
 		if(ha==hh&&ma<mh) r = true;
-		if(r==false) System.out.println("No se encuentra dentro del horario de atencion");
+		if(r==false) Auxiliar.advertencia("No se encuentra dentro del horario de atencion\n\nReintentar", "Ingreso Turno - Error fuera de rango horario");
 		return r;
 	}
 

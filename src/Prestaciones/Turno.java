@@ -78,8 +78,8 @@ public class Turno {
 	public void agregarTurno() {
 		boolean p = Paciente.existeDNIPaciente(dniPaciente);
 		if(p==false)System.out.println("DNI inexistente, debe dar de alta el paciente");
-		boolean e = Especialidad.existeIdEspecialidad(idEspecialidad);
-		if(e==false)System.out.println("Id Especiliadad inexistente, debe dar de alta la Especialidad");
+		//boolean e = Especialidad.existeIdEspecialidad(idEspecialidad);
+		//if(e==false)System.out.println("Id Especiliadad inexistente, debe dar de alta la Especialidad");
 		c.getListaTurnos().add(this);
 	}
 	
@@ -112,15 +112,17 @@ public class Turno {
 	}
 	
 	
-	public static void turnosDelPaciente(int dni) {
+	public static String turnosDelPaciente(int dni) {
 		Locale locale = new Locale ( "es" , "ES" );
 		Date hoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		String r = "";
 		for(int x =0; x<c.getListaTurnos().size(); x++) {
 			String b = new SimpleDateFormat("EEEE dd/MM/yyyy", locale).format(c.getListaTurnos().get(x).getFecha());
 			if(c.getListaTurnos().get(x).getFecha().after(hoy)&&c.getListaTurnos().get(x).dniPaciente==dni&&c.getListaTurnos().get(x).idPrestacion==0) {
-				System.out.println("Turno nro: " + c.getListaTurnos().get(x).getId() + " -\t Especialidad Nro: "+ c.getListaTurnos().get(x).idEspecialidad + " -\t Fecha: " + b + " -\tHorario: " + c.getListaTurnos().get(x).horaInicio);
+				r = r + c.getListaTurnos().get(x).getId() + "  -  Especialidad Nro:  "+ c.getListaTurnos().get(x).idEspecialidad + "  -  Fecha: " + b + "  -  tHorario:  " + c.getListaTurnos().get(x).horaInicio;
 		}}
-
+		System.out.println(r);
+		return r;
 	}
 	
 	public static void borrarTurno(int idturno) {
@@ -134,30 +136,35 @@ public class Turno {
 	}
 	
 	
-	public static void mostrarTurnos() {
+	public static String mostrarTurnos() {
+		String r = "";
 		Locale locale = new Locale ( "es" , "ES" );
-		Date hoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		LocalDate hoyd = LocalDate.now();
 		for(int x = 0; x<c.getListaTurnos().size();x++) {
-			if(c.getListaTurnos().get(x).getFecha().after(hoy)&&c.getListaTurnos().get(x).getIdPrestacion()==0) { //
+			LocalDate h = c.getListaTurnos().get(x).getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			
+			if(h.isAfter(hoyd)||h.equals(hoyd)&&c.getListaTurnos().get(x).getIdPrestacion()==0) { //
 			String f = new SimpleDateFormat("EEEE dd/MM/yyyy", locale).format(c.getListaTurnos().get(x).getFecha());
-			System.out.println(c.getListaTurnos().get(x).getId() + "\t" + c.getListaTurnos().get(x).getDniPaciente() + "\t" + f
-					+ "\t" + c.getListaTurnos().get(x).getHoraInicio() + "\t" + c.getListaTurnos().get(x).getHoraFin());
+			r = r + c.getListaTurnos().get(x).getId() + "  -  " + c.getListaTurnos().get(x).getDniPaciente() + "  -  " + f
+					+ "  -  " + c.getListaTurnos().get(x).getHoraInicio() + "  -  " + c.getListaTurnos().get(x).getHoraFin() + "        \n";
 		}}
+		return r;
 	}
 	
 	
 	
-	public static void turnosDelDia(Date buscar, int e) {
+	public static String turnosDelDia(Date buscar, int e) {
+		String r = "";
 		Locale locale = new Locale ( "es" , "ES" );
 		String b = new SimpleDateFormat("dd/MM/yyyy", locale).format(buscar);
 		for(Turno t : c.getListaTurnos()) {
 			String f = new SimpleDateFormat("dd/MM/yyyy", locale).format(t.fecha);
 			if(b.equals(f)&&t.idEspecialidad==e&&t.idPrestacion==0) {
-				System.out.println("Turno nro:" + t.id + "\t DNI: " + t.dniPaciente + "\t Dia: " + f + "\t Horario:" + t.horaInicio + "\t" + t.horaFin);
+				r = "Turno nro: " + t.id + "  -  DNI: " + t.dniPaciente + "  -  Dia: " + f + "  -  Horario: " + t.horaInicio + "  -  " + t.horaFin + "     ";
 			}
 			
 		}
-		
+		return r;
 	}
 	
 	public static boolean sobreTurno(Date buscar, String desde, String hasta, Especialidad e) {
@@ -168,7 +175,7 @@ public class Turno {
 			String f = new SimpleDateFormat("dd/MM/yyyy", locale).format(t.fecha);
 			if(b.equals(f)&&t.idEspecialidad==e.getId()) {
 				r = horarioSuperpuesto(desde, hasta, t.horaInicio, t.horaFin);
-				if(r) System.out.println("Especialidad con superposicion de horarios: " + desde + " - " + hasta + " con turno: " + t.horaInicio + " - " + t.horaFin);
+				if(r) Auxiliar.advertencia("Especialidad con superposicion de horarios: " + desde + " - " + hasta + " con turno: " + t.horaInicio + " - " + t.horaFin, "Ingreso de Turno - Error Superposicion de turnos");
 			}
 		}
 		return r;
@@ -182,7 +189,7 @@ public class Turno {
 			String f = new SimpleDateFormat("dd/MM/yyyy", locale).format(t.fecha);
 			if(b.equals(f)&&t.dniPaciente==dni) {
 				r = horarioSuperpuesto(desde, hasta, t.horaInicio, t.horaFin);
-				if(r) System.out.println("Paciente con superposicion de horarios: " + desde + " - " + hasta + " con turno: " + t.horaInicio + " - " + t.horaFin);
+				if(r) Auxiliar.advertencia("Paciente con superposicion de horarios: " + desde + " - " + hasta + " con turno: " + t.horaInicio + " - " + t.horaFin, "Ingreso de Turno - Error Superposicion de turnos");
 			}
 		}
 		return r;

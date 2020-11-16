@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
-
+import javax.swing.JOptionPane;
 import BaseClinica.*;
 import Prestaciones.Turno;
 
@@ -37,62 +36,44 @@ public class MenuTurno extends Menu {
             //opcion = scanner.nextInt();
             switch (opcion) {
             	case 1: 
-            		Auxiliar.menuo(c.mostrarEspecialidades(), "Nuevo Turno", array);
-            		boolean r = true;
-            		int ide = 0;
-            		while(r) {
-                		System.out.print("ID Especialidad: "); ide = datos.nextInt();
-            			r = !Especialidad.existeIdEspecialidad(ide);
-
-            		}
+            		o = Auxiliar.menuo("Especialidades disponibles.\n\nSeleccione opcion:", "Nuevo Turno", c.mostrarEspecialidades());
+            		int ide = Auxiliar.n(o);
             		e.cargarEspecialidadPorID(ide);
             		diasAtencion(e);
-            		System.out.println("Dias de atencion: " + a + "\nHorario: " + e.getHoraInicio() + " Hasta: " + e.getHoraFin());
-            		datos.reset();
-            		r = true;
+            		String tex = "Especialidad " + e.getNombre() + "\n\n";
+            		tex = tex + "Dias de atencion: " + a + "\nHorario: " + e.getHoraInicio() + " Hasta: " + e.getHoraFin() + "\n\nIngrese fecha para el turno:";
+            		boolean r = true;
             		while(r) {
-                		System.out.print("Ingrese fecha: "); String f = datos.next();
+            			String f = Auxiliar.menus(tex, Auxiliar.hoyString());
             			r =controlFecha(f, e);
             			if(!r) r = !fechaMayorAhoy(f);
 
             		}
-            		Turno.turnosDelDia(fechaturno, ide);
+            		tex = Turno.turnosDelDia(fechaturno, ide);
             		r = true;
             		while(r) {
-            			System.out.print("DNI Paciente: "); dni = datos.nextInt();
+            			dni = Integer.parseInt(Auxiliar.menus("Turnos asignados este dia:\n\n" + tex + "\n\nIngrese numero de DNI del paciente.\n\nDebe ingresarse el numero entero sin .(punto) ni , (coma):", "12345678"));
             			r = !Paciente.existeDNIPaciente(dni);
-            			if(r)System.out.println("El DNI no es correcto, intente nuevamente");
+            			if(r)Auxiliar.advertencia("El DNI no es correcto, intente nuevamente", "Ingreso turno - Error DNI no dado de alta");
             		}
             			Paciente.turnosSinAsistir(dni);
             		r = true;
             		while(r) {
-            			System.out.print("Hora del turno: ");  hti = datos.next();
+            			hti = Auxiliar.menus("Bienvenido paciente: " + Paciente.nombrePacientexDni(dni) + "\n\nIngrese la Hora del turno (formato hh:mm): ", "08:00");
             			r = controlDeHoras(hti, e);
             		}
             		
             		r = true;
             		while(r) {
-            			System.out.print("Hora del fin turno: "); htf = datos.next();
+            			htf = Auxiliar.menus("Hora finalizacion de turno: ", "08:10");
             			r = controlDeHoras(htf, e);
             			if(horaInicioMenorHorafin(hti, htf)) MenuTurno.display();
             		}
             		if(Turno.sobreTurno(fechaturno, hti, htf, e)||Turno.sobreTurno(fechaturno, hti, htf, dni)) {
-            			r = true; 
-            			while(r) {
-            				System.out.print("Dar sobre turno? s-n: "); char s = datos.next().charAt(0);
-            				switch (s) {
-            				case 's':
-            					new Turno(dni, ide, fechaturno, hti, htf);
-            					r = false;
-            					break;
-            				case 'n':
-            					System.out.println("Turno cancelado.");
-            					opcion = 'a';
-            					r = false;
-            					break;
-            				default: System.out.println("Opcion no válida"); 
+            			ide = JOptionPane.showOptionDialog(null,"Desea otorgar soberturno?", "Ingreso Turno - Autorizacion Sobreturno", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            			if(ide==0) new Turno(dni, ide, fechaturno, hti, htf);
+            			else { Auxiliar.advertencia("Turno cancelado.", "Ingreso turno - No dar sobreturno");
             				}
-            			}
             			} else { new Turno(dni, ide, fechaturno, hti, htf);}
             			a = "";
             			fechaturno = null;
@@ -100,15 +81,20 @@ public class MenuTurno extends Menu {
                 case 2: 
             		r = true;
             		while(r) {
-            			System.out.print("DNI Paciente: "); dni = datos.nextInt();
+            			dni = Integer.parseInt(Auxiliar.menus("Ingrese numero de DNI del paciente.\n\nDebe ingresarse el numero entero sin .(punto) ni , (coma):", "12345678"));
             			r = !Paciente.existeDNIPaciente(dni);
+            			if(r)Auxiliar.advertencia("El DNI no es correcto, intente nuevamente", "Ingreso turno - Error DNI no dado de alta");
             		}
-            			Turno.turnosDelPaciente(dni);
-            			System.out.print("Ingrese nro Turno a eliminar: "); int idturno = datos.nextInt();
-            			Turno.borrarTurno(idturno);
+            			tex = Turno.turnosDelPaciente(dni);
+            			if(tex.length()<5) {
+            				Auxiliar.advertencia("No existen turnos disponibles para borrar del DNI: " + dni, "Turnos - Error No hay DNI asociado");
+            				opcion = 1;
+            			} else {
+            			int idturno = Integer.parseInt(Auxiliar.menus(tex + "\n\nIngrese nro Turno a eliminar: ", tex.substring(0, tex.indexOf(" "))));
+            			Turno.borrarTurno(idturno);}
                 	break;
                 case 3:
-                	Turno.mostrarTurnos();
+                	Auxiliar.advertencia("Listado de turnos: \n\n" + Turno.mostrarTurnos(), "Reporte - Listado de turnos");
                 	break;
                 case 0: Menu.display();
                 default: System.out.println("Opcion no válida");   
@@ -137,11 +123,11 @@ public class MenuTurno extends Menu {
 				r = false;
 			} else {
 				r = true;
-				System.out.println("El dia ingresado (" + diaSemana(dS) + ") No brinda atencion esta especializacion. Reintentar");
+				Auxiliar.advertencia("El dia ingresado (" + diaSemana(dS) + ") No brinda atencion esta especializacion. Reintentar", "Ingreso turno - Error dia de atencion");
 			};
 		 } catch (ParseException e2) {
-			 System.err.println("El formato de fecha debe ser dd/mm/yyyy.");
-			 e2.printStackTrace();
+			 Auxiliar.advertencia("El formato de fecha debe ser dd/mm/yyyy. Reintentar", "Ingreso turno - Error en formato de fecha");
+			 //e2.printStackTrace();
 		 }
 		return r;
 	}
@@ -164,7 +150,7 @@ public class MenuTurno extends Menu {
 		if(hi<hf) r = false;
 		else if(hi==hf&&mi<mf) r = false;
 		else {
-			System.out.print("La hora de fin no puede ser menor a la hora inicio. Turno cancelado" );
+			Auxiliar.advertencia("La hora de fin no puede ser menor a la hora inicio. Turno cancelado", "Ingreso turno - Error en hora fin" );
 			r = true;
 		}
 		return r;
@@ -175,7 +161,7 @@ public class MenuTurno extends Menu {
 		LocalDate hoy = LocalDate.now();		
 		LocalDate t = LocalDate.parse(f, DateTimeFormatter.ofPattern("dd/MM/yyyy") );
 		if(t.compareTo(hoy)>=0) r = true;
-		if(!r)System.out.println("La fecha ingresada es menor a hoy, reintentar");
+		if(!r)Auxiliar.advertencia("La fecha ingresada es menor a hoy, reintentar", "Ingreso turno - Error quiere viajar al pasado");
 		return r;
 	}
 	

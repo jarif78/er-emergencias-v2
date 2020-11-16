@@ -58,28 +58,51 @@ public class Prestacion extends Turno {
 	
 
 
-	public static LinkedList mostrarPrestacionesHoy(int e) {
-		LinkedList <Integer> idturnos = new LinkedList<Integer>();
-		Date hoy = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
+	public static String [] mostrarPrestacionesHoy(int e) {
+		//LinkedList <Integer> idturnos = new LinkedList<Integer>();
+		Locale locale = new Locale ( "es" , "ES" );
+		String [] r = new String [cantPrestaciones(e)];
+		int x = 0;
 		for(Turno t : c.getListaTurnos()) {
 			if(t.idEspecialidad == e&&t.idPrestacion==0) {	// agregar filtro de fecha de ser necesario &&t.fecha.after(hoy)
-				idturnos.add(t.id); 
-				System.out.println("Turno Nro: " + t.id + "\tPaciente: " + Paciente.nombrePacientexDni(t.dniPaciente) + "\tHora:" + t.horaInicio + "\t " + t.fecha); 
+				String f = new SimpleDateFormat("dd/MM/yyyy", locale).format(t.fecha);
+				r[x] = t.id + "  -  Paciente: " + Paciente.nombrePacientexDni(t.dniPaciente) + "  -  Hora: " + t.horaInicio + "  -  " + f; 
+				x++;
 			}
 		}
-		return idturnos;
+		return r;
+	}
+	
+	private static int cantPrestaciones(int e) {
+		int r = 0;
+		for(Turno t : c.getListaTurnos()) {
+			if(t.idEspecialidad == e&&t.idPrestacion==0) r++;
+		}
+		return r;
 	}
 
-	public static void prestacionImpagaPorDni(int dni) {
+	public static String [] prestacionImpagaPorDni(int dni) {
+		int x = 0;
+		for(Prestacion p : c.getListaPrestacion()) {
+			if(p.dniPaciente==dni&&p.formaPago==null) {	// agregar filtro de fecha de ser necesario
+				x++;
+			}
+		}
+
+		String r [] = new String [x];
+		x = 0;
 		Locale locale = new Locale ( "es" , "ES" );
 		for(Prestacion p : c.getListaPrestacion()) {
 			if(p.dniPaciente==dni&&p.formaPago==null) {	// agregar filtro de fecha de ser necesario
-				String f = new SimpleDateFormat("EEEE dd/MM/yyyy", locale).format(p.fecha);
-				System.out.println("Prestacion nro: " + p.id + "\t Especialidad: " + Especialidad.nombreAreaPorID(p.idEspecialidad)  + "\t " + p.tratamiento + "\tFecha: " + f); 
+				String f = new SimpleDateFormat("dd/MM/yyyy", locale).format(p.fecha);
+				r[x]= p.id + "  -  Especialidad: " + Especialidad.nombreAreaPorID(p.idEspecialidad)  + "  -  " + p.tratamiento + "  -  Fecha: " + f; 
+				x++;
 			}
 		}
+		return r;
 	}
-
+	
+	
 	public Prestacion prestacionPorId(int id) {
 		Prestacion r = new Prestacion();
 		for(Prestacion p : c.getListaPrestacion()) {
