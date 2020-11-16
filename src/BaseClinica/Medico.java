@@ -54,6 +54,10 @@ public class Medico extends Paciente{
 		agregarMedico();
 	}
 	
+	public Medico() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public static String nombreMedicoPorID(int id) {
 		String r = null;
 		for(int x = 0; x<c.getListaMedicos().size(); x++) {
@@ -64,7 +68,15 @@ public class Medico extends Paciente{
 		}
 		return r;
 	}
-
+	
+	public static String [] arrayMedicos() {
+		String [] r = new String [c.getListaMedicos().size()];
+		for (int i = 0; i < c.getListaMedicos().size(); i++) {
+			r[i] = c.getListaMedicos().get(i).getid() + "  -  " + c.getListaMedicos().get(i).getEspecialidadMed()
+					+ "  -  " + c.getListaMedicos().get(i).getNombre();
+		}
+		return r;
+	}
 
 
 }

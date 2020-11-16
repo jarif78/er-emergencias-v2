@@ -46,8 +46,8 @@ public class Clinica {
 	public String mostrarMedicos() {
 		String r = "";
 		for (int i = 0; i < listaMedicos.size(); i++) {
-			r = listaMedicos.get(i).getid() + "  -  " + listaMedicos.get(i).getEspecialidadMed()
-					+ "  -  " + listaMedicos.get(i).getNombre();
+			r = r + listaMedicos.get(i).getid() + "  -  " + listaMedicos.get(i).getEspecialidadMed()
+					+ "  -  " + listaMedicos.get(i).getNombre()+"\n";
 		}
 		return r;
 	}
@@ -62,10 +62,15 @@ public class Clinica {
 		return r;
 	}
 
-	public void mostrarAreas() {
+	public String [] mostrarAreas() {
+		int x = listaArea.size();
+		String r[] = new String[x];
+		x = 0;
 		for (int i = 0; i < listaArea.size(); i++) {
-			System.out.println(listaArea.get(i).getId() + "\t - " + listaArea.get(i).getNombre());
+			r[x] = listaArea.get(i).getId() + "  -  " + listaArea.get(i).getNombre();
+			x++;
 		}
+		return r;
 	}
 
 	public String[] mostrarEspecialidades() {
@@ -89,24 +94,29 @@ public class Clinica {
 		return r;
 	}
 
-	public void mostrarPrestacionesporMedico(int id) {
+	public String mostrarPrestacionesporMedico(int id) {
+		String r = "";
 		for (Especialidad e : listaEspecialidad) {
 			if (e.idMedico == id) {
 				for (Prestacion p : listaPrestacion) {
 					if (p.getIdEspecialidad() == e.id) {
-						System.out.println(p.getId() + "\t" + p.getDniPaciente() + "\t" + p.getFecha());
+						r = r + "Id:" + p.getId() + "  -  DNI Paciente:" + p.getDniPaciente() + "  -  Fecha Prestacion:" + p.getFecha() + "\n";
 					}
 				}
 			}
 		}
+		return r;
 	}
 
-	public void listadoEstudiosRealizados() {
+	public String listadoEstudiosRealizados() {
+		String r = "";
 		for (Prestacion p : listaPrestacion) {
 			if (p.isEstudio()) {
-				System.out.println(p.getId() + "\t" + p.getDniPaciente() + "\t" + p.getFecha());
+				r = r + "Id: " + p.getId() + "  -  Paciente DNI: " + p.getDniPaciente() + "  - Fecha: " + p.getFecha() + "\n";
 			}
 		}
+		return r;
+		
 	}
 
 }

@@ -46,7 +46,11 @@ public class Menu {
                 	break;
                 case 7: menuReportes.display();
                 	break;
-                case 8: menuAyuda.display();
+                case 8: Auxiliar.advertencia("Bienvenido TP Clinica Unpaz.\nEl programa incializa una instancia tipo Clinica en el main, tiene precargado en la clase AuxArmadoBase tres areas medicas, varias especialidades, pacientes"
+				+ " turnos, prestaciones, medicos. \nSi desea inicializar una clinica desde cero puede cancelar en el main la linea 21 - Auxiliar.altas(unpaz) de esta manera el programa inicia sin ningun"
+				+ " dato.\nPara el manejo se utiliza la informacion y toma de datos desde cuadros de dialgo de Java (JOptionPane) Como esta ventana de ayuda ;)\n\nCon la informacion precargada puede probar el programa\n\n"
+				+ "En caso de comenzar sin datos precargados el orden para inicializar es: \n1 - Area Medica \n2 - Medico \n3 - Especialidad\n4 - Paciente\n\nLuego de "
+				+ " esto se encuentra en condiciones de asignar turnos, prestaciones al/los pacientes cargado/s\n\nMuchas gracias! Esperamos sea de su agrado\n", "Ayuda");
                 	break;
                 case 0: System.out.println("Fin de programa"); System.exit(0);
                 default: System.out.println("Opcion no válida");

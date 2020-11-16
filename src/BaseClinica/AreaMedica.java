@@ -16,9 +16,6 @@ public class AreaMedica {
 
 	public AreaMedica() {}
 	
-	
-	
-	
 	public AreaMedica(String nombreAreaMedica, int idMedicoCoordinador) {
 		setIdAreaMedica();
 		this.nombre = nombreAreaMedica;
@@ -31,9 +28,17 @@ public class AreaMedica {
 		boolean r = false;
 		for(int x = 0; x<c.getListaArea().size() ; x++) {
 			if(nombre.equals(c.getListaArea().get(x).getNombre())) {
-				System.out.println("Error el Area " + nombre + " ya se encuentra ingresada.");
+				Auxiliar.advertencia("Error el Area " + nombre + " ya se encuentra ingresada.\n\nEl area medica no se ingresa.", "Area Medica - Error ingreso");
 				r = true;
 			}
+		}
+		return r;
+	}
+	
+	public static String stringListadoAreasMedicas() {
+		String r = "";
+		for(AreaMedica a : c.getListaArea()) {
+			r = r + "Id: " + a.id + "\t - Nombre: " + a.nombre + "\t Medico coordinador: " + Medico.nombreMedicoPorID(a.idMedico) + "\n";
 		}
 		return r;
 	}
@@ -75,6 +80,8 @@ public class AreaMedica {
 		}
 		return r;
 	}
+	
+	
 	
 
 }

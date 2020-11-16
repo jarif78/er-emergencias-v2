@@ -1,8 +1,6 @@
 package BaseClinica;
 
 import java.util.ArrayList;
-
-import Menues.MenuTurno;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Especialidad extends AreaMedica{
 
@@ -55,7 +53,7 @@ public class Especialidad extends AreaMedica{
 
 	
 	public void agregarEspecialidad() {
-		if(existeEspecialidad()){System.out.println("Error Especialidad ya ingresado");}
+		if(existeEspecialidad()){Auxiliar.advertencia("Error Especialidad ya ingresado\n\nNo se va a ingresar la especialidad", "Error ingreso Especialidad");}
 		else if(controlHoras()){c.getListaEspecialidad().add(this);}
 	}
 	
@@ -115,6 +113,13 @@ public class Especialidad extends AreaMedica{
 		}
 	}
 
+	public static String reporteEspecialidades() {
+		String r = "";
+		for(Especialidad e : c.getListaEspecialidad()) {
+			r = r + e.id + "  -  Nombre: " + e.nombre + "  -  Medico: " + Medico.nombreMedicoPorID(e.idMedico) + "\n";
+		}
+		return r;
+	}
 	
 	public void infoEspecialidad(int id) {
 		String n = nombre;
@@ -123,7 +128,7 @@ public class Especialidad extends AreaMedica{
 		ArrayList d = dias;
 		String i = horaInicio;
 		String f = horaFin;
-		System.out.println("Especialidad: "+n+"\nArea: "+a+"\nMedico: "+m+"\nDias: "+d+"\nHorario: "+i+" hasta: "+f);
+		Auxiliar.advertencia("Especialidad: "+n+"\nArea: "+a+"\nMedico: "+m+"\nDias: "+d+"\nHorario: "+i+" hasta: "+f, n);
 		
 	}
 	
@@ -135,7 +140,7 @@ public class Especialidad extends AreaMedica{
 		int mh = Integer.parseInt(horaFin.substring(3, 5));
 		if(hd<hh) r = true;
 		if(hd==hh&&md<mh) r = true;
-		if(r==false) System.out.println("Error el horario de inicio no puede ser inferior al horario de final - No se ingresa especialidad");
+		if(r==false) Auxiliar.advertencia("Error el horario de inicio no puede ser inferior al horario de final - No se ingresa especialidad", "Especialidad - Error ingreso especialidad");
 		return r;
 	}
 	

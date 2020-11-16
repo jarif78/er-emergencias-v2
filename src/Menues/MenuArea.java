@@ -1,30 +1,35 @@
 package Menues;
 
 import BaseClinica.AreaMedica;
+import BaseClinica.Auxiliar;
+import BaseClinica.Medico;
 
 public class MenuArea extends Menu{
 
 	public static void menuArea() {
+		
         int opcion;
-        String mensajeOpciones = "\nClinica - Area: ->1) Alta ->2) Baja ->3) Listado Area ->0) salir";
+        String mensajeOpciones = "Menu Area Medica: \n\n1) Alta \n2) Baja \n3) Listado Area \n0) Salir";
+        String[] array = {"1 - Alta Area", "2 - Baja Area", "3 - Listado Area", "0 - Salir"};
+
         while (true) {
-        	System.out.println(mensajeOpciones);
-            opcion = scanner.nextInt();
+        	Object o = Auxiliar.menuo(mensajeOpciones, "Area Medica", array);
+        	opcion = Auxiliar.n(o);
             switch (opcion) {
             	case 1: 
-            		System.out.print("Nombre: "); String n = datos.nextLine();
-            		c.mostrarMedicos();
-            		System.out.print("Ingrese ID Medico Coordinardor: "); 
-            		int id = scanner.nextInt();
+            		String n = Auxiliar.menus("Ingrese nombre del Area:", "Area Clinica");
+            		o = Auxiliar.menuo("Seleccione el medico Coordinador del area", "Area Medica: " + n, Medico.arrayMedicos());
+            		int id = Auxiliar.n(o);
             		new AreaMedica(n, id);
             		break;
                 case 2: 
-                	c.mostrarAreas();
-                	System.out.print("Ingrese Nro Area: "); id = scanner.nextInt();
+                	o = Auxiliar.menuo("Seleccione el Area medica a borrar", "Area Medica - Borrar", c.mostrarAreas());
+                	id = Auxiliar.n(o);
                 	AreaMedica.borrarArea(id);
                 	break;
                 case 3:
-                	c.mostrarAreas();
+                	Auxiliar.advertencia("Listado de Areas Medicas:\n\n" + AreaMedica.stringListadoAreasMedicas(), "Reporte - Area medica");
+                	
                 	break;
                 case 0: Menu.display();
                 default: System.out.println("Opcion no válida");   

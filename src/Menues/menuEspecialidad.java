@@ -2,8 +2,11 @@ package Menues;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import BaseClinica.Auxiliar;
 import BaseClinica.Especialidad;
+import BaseClinica.Medico;
 
 public class menuEspecialidad extends Menu {
 	
@@ -12,49 +15,62 @@ public class menuEspecialidad extends Menu {
 	private static String auxHora = null;
 		
 	public static void display() {
+		
         int opcion;
-        String mensajeOpciones = "\nClinica - Especialidad: ->1) Alta ->2) Baja ->3) Listado Especialidades ->4) Informacion Especialidad ->0) salir";
+        String mensajeOpciones = "Menu Especialidad: \n\n1) Alta \n2) Baja \n3) Listado Especialidades \n4) Informacion Especialidad \n0) Salir";
+        String[] array = {"1 - Alta Especialidad", "2 - Baja Especialidad", "3 - Listado Especialidad", "4 - Informacion Especialidad", "0 - Salir"};
+
         while (true) {
-        	System.out.println(mensajeOpciones);
-            opcion = scanner.nextInt();
+        	
+        	Object o = Auxiliar.menuo(mensajeOpciones, "Menu Especialidad", array);
+    		opcion = Auxiliar.n(o);
             switch (opcion) {
             	case 1: 
-            		System.out.print("Nombre: "); String n = datos.nextLine();
-            		c.mostrarAreas();
-            		System.out.print("Nro. Area Medica: "); int idarea = scanner.nextInt();
-            		c.mostrarMedicos();
-            		System.out.print("Nro Medico: "); int idmed = scanner.nextInt();
-            		System.out.println("Seleccionar dias de atencion (S) Si // (N) No: ");
-            		System.out.print("2 - Lunes (S/N):"); diasAtencion(datos.next(), 1);
-            		System.out.print("3 - Martes (S/N):"); diasAtencion(datos.next(), 2);
-            		System.out.print("4 - Miercoles (S/N):"); diasAtencion(datos.next(), 3);
-            		System.out.print("5 - Jueves (S/N):"); diasAtencion(datos.next(), 4);
-            		System.out.print("6 - Viernes (S/N):"); diasAtencion(datos.next(), 5);
-            		System.out.print("7 - Sabado (S/N):"); diasAtencion(datos.next(), 6);
-            		System.out.print("1 - Domingo (S/N):"); diasAtencion(datos.next(), 7);
-            		System.out.print("Hora incio Atencion (00:00 a 23:59 hs): ");
+            		String n = Auxiliar.menus("Ingrese nombre de la Especialidad:", "Pediatria");
+            		o = Auxiliar.menuo("Areas Medicas disponibles\n\nSeleccione Area medica:", "Menu Especialidad - Alta", c.mostrarAreas());
+            		int idarea = Auxiliar.n(o);
+            		o = Auxiliar.menuo("Listado medicos\n\nSeleccione Medico:", "Menu Especialidad - Alta", Medico.arrayMedicos());
+            		int idmed = Auxiliar.n(o);
+            		
+        			int ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Lunes:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(2);
+        			ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Martes:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(3);
+        			ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Miercoles:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(4);
+        			ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Jueves:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(5);
+        			ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Viernes:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(6);
+        			ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Sabado:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(7);
+        			ide = JOptionPane.showOptionDialog(null,"Dias de Atencion\n\nAtencion dias Domningo:", "Especialidad- Dias de Atencion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        			if(ide==0) dias.add(1);
             		boolean ok = true;
             		while(ok) {
-            			ok = controlHora(datos.next());
+            			ok = controlHora(Auxiliar.menus("Hora inicio Atencion (00:00 a 23:59 hs):", "08:00"));
             		}
             		String horaInicio = auxHora;
             		System.out.print("Hora fin Atencion (00:00 a 23:59 hs): ");
             		ok = true;
             		while(ok) {
-            			ok = controlHora(datos.next());
+            			ok = controlHora(Auxiliar.menus("Hora Fin Atencion (00:00 a 23:59 hs):", "18:00"));
             		}
             		String horaFin = auxHora;
             		new Especialidad(n, idarea, idmed, dias, horaInicio, horaFin);
             		break;
                 case 2: 
-                	System.out.print("Ingrese el ID a borrar: ");
-                	Especialidad.BorrarEspecialidad(scanner.nextInt());
+                	
+                	o = Auxiliar.menuo("Especialidades\n\nSeleccione la especialidad a borrar:", "Especialidad - Borrar", c.mostrarEspecialidades());
+                	ide = Auxiliar.n(o); 
+                	Especialidad.BorrarEspecialidad(ide);
                 	break;
                 case 3:
-                	c.mostrarEspecialidades();
+                	Auxiliar.advertencia("Listado de especialidades:\n\n" + Especialidad.reporteEspecialidades(), "Reporte - Especialidad");
                 	break;
                 case 4:
-                	System.out.print("ID Especilidad: "); int ide = scanner.nextInt();
+                	o = Auxiliar.menuo("Seleccione Especialidad para obtener informacion", "Especialidades - Informacion de especialidad" , c.mostrarEspecialidades());
+                	ide = Auxiliar.n(o);
                 	Especialidad e = new Especialidad();
                 	e.cargarEspecialidadPorID(ide);
                 	e.infoEspecialidad(ide);
@@ -64,12 +80,11 @@ public class menuEspecialidad extends Menu {
         }}
 	}
 
-public static void diasAtencion(String t, int dia) {
-		if(t.equalsIgnoreCase("s")) {
-			dias.add(dia);
-		}
-
-	}
+//public static void diasAtencion(String t, int dia) {
+//		if(t.equalsIgnoreCase("s")) {
+//			dias.add(dia);
+//		}
+//	}
 
 public static boolean controlHora (String hora) {
 	boolean r = true;
@@ -82,7 +97,7 @@ public static boolean controlHora (String hora) {
 			r = false;
 		} else 	Auxiliar.advertencia("La hora debe ingresarse en el siguiente rango 00:00 a 23:59\n\nReintentar ", "Ingreso Turno - Error fuera de rango horario");
 	} catch(Exception e) {
-		System.out.print("La hora debe ingresarse en el siguiente rango 00:00 a 23:59: ");
+		Auxiliar.advertencia("La hora debe ingresarse en el siguiente rango 00:00 a 23:59", "Especialidad - Error en el formato horario");
 			r = true;
 	}
 	

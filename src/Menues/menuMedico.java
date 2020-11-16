@@ -1,10 +1,7 @@
 package Menues;
 
-import java.util.Scanner;
-
 import BaseClinica.Auxiliar;
 import BaseClinica.Medico;
-import BaseClinica.Paciente;
 
 public class menuMedico extends Menu {
 	
@@ -12,10 +9,10 @@ public class menuMedico extends Menu {
 	public static void display() {
         int opcion;
         String mensajeOpciones = "Menu Medicos\n\n1) Alta Medico \n2) Baja Medico \n3) Listado Medico\n0) Salir \n\nSeleccione opcion:";
-        String[] array = {"1 - Alta Paciente", "2 - Baja Paciente", "3 - Listado Pacientes", "0 - Salir"};
+        String[] array = {"1 - Alta Medico", "2 - Baja Medico", "3 - Listado Medicos", "0 - Salir"};
         while (true) {
 
-        	Object o = Auxiliar.menuo(mensajeOpciones, "Menu Pacientes", array);
+        	Object o = Auxiliar.menuo(mensajeOpciones, "Menu Medicos", array);
     		opcion = Auxiliar.n(o);
     		
             switch (opcion) {
@@ -27,9 +24,12 @@ public class menuMedico extends Menu {
             			String dnis = Auxiliar.menus("Ingrese DNI:", "12345678");
             			try {
             				dni = Integer.parseInt(dnis);
-            				if(Paciente.existeDNIPaciente(dni)) {
+            				Medico m = new Medico();
+            				m.setDni(dni);
+            				if(m.existeDNIMedico()) {
             					Auxiliar.advertencia("El DNI: " + dni +"\n\n Ya se encuentra ingresado, nombre: " + Medico.nombrePacientexDni(dni), "Alta Medico - Error DNI Existente");
             				} else r = false;
+            				m=null;
             			} catch (Exception e) {
             				Auxiliar.advertencia("Formato de DNI invalido, el numero no debe contener . (punto) ni , (coma)\nIngresar unicamente numero.", "Alta paciente - Error en DNI");
             				r = true;
