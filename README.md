@@ -51,7 +51,7 @@ _Estos son los integrantes del equipo que desarrolló el presente sistema:_
 
 * **Anahí Aguirre** - *Trabajo de grupo* - [AnahiAguirre](https://github.com/AnahiAguirre)
 * **ARiel Fernández** - *Trabajo de grupo* - [jarif78](https://github.com/jarif78)
-* **Ricardo Gonzalez** - *Trabajo de grupo* - [richararg](https://github.com/richararg)
+* **Ricardo González** - *Trabajo de grupo* - [richararg](https://github.com/richararg)
 
 
 ## Licencia 📄
