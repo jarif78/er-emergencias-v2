@@ -1,16 +1,13 @@
 package Prestaciones;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.Locale;
 
 import BaseClinica.Especialidad;
 import BaseClinica.Paciente;
 
-@SuppressWarnings({ "rawtypes", "null" })
+@SuppressWarnings({ })
 public class Prestacion extends Turno {
 	
 	private String tratamiento;

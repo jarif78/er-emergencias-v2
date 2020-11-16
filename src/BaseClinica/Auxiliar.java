@@ -7,11 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
-
 import javax.swing.JOptionPane;
 
-import BaseClinica.*;
 import Menues.Menu;
 import Menues.MyIcon;
 import Prestaciones.Prestacion;

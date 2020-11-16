@@ -1,16 +1,12 @@
 package BaseClinica;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
 
 import Prestaciones.Prestacion;
 import Prestaciones.Turno;
 
-@SuppressWarnings("rawtypes")
 public class Clinica {
 	private LinkedList<AreaMedica> listaArea = new LinkedList<AreaMedica>();
 	private LinkedList<Paciente> listaPacientes = new LinkedList<Paciente>();

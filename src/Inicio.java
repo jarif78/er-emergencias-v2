@@ -7,7 +7,6 @@ import Prestaciones.Turno;
 
 public class Inicio {
 
-	@SuppressWarnings("null")
 	public static void main(String[] args) {
 		MyIcon icon = new MyIcon();
 		
