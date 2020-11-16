@@ -12,7 +12,7 @@ public class Inicio {
 		MyIcon icon = new MyIcon();
 		
 		JOptionPane.showMessageDialog(null, "Bienvenido!\n\nMateria: Programacion Orientada a Objetos\n\nTrabajo Practico de programa Clinica - UNPAZ                                     "
-				+ "\n\n\nProfesor: Ing. Lucas Guaycochea\nProfesor: Lic. Cristian Ciarallo\n\nAlumno: Anahi Aguirre\nAlumno: Ariel Fernandez\nAlumno: Ricardo Gonzalez\n\n",
+				+ "\n\nProfesores:\n     Ing. Lucas Guaycochea\n     Lic. Cristian Ciarallo\n\nAlumnos:\n     Anahi Aguirre\n     Ariel Fernandez\n     Ricardo Gonzalez\n\n",
 				"TP-POO - Programa clinica", JOptionPane.INFORMATION_MESSAGE, icon);
 
 		Clinica unpaz = new Clinica();
