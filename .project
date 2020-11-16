@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>unpaz.png</name>
+			<type>1</type>
+			<location>C:/Users/ricar/eclipse-workspace/TPOOClinica2/src/Menues/unpaz.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>

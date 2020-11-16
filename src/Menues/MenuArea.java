@@ -9,7 +9,7 @@ public class MenuArea extends Menu{
 	public static void menuArea() {
 		
         int opcion;
-        String mensajeOpciones = "Menu Area Medica: \n\n1) Alta \n2) Baja \n3) Listado Area \n0) Salir";
+        String mensajeOpciones = "Menu Area Medica: \n\n1) Alta \n2) Baja \n3) Listado Area \n0) Salir\n";
         String[] array = {"1 - Alta Area", "2 - Baja Area", "3 - Listado Area", "0 - Salir"};
 
         while (true) {

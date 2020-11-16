@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import BaseClinica.*;
+import Menues.Menu;
+import Menues.MyIcon;
 import Prestaciones.Prestacion;
 import Prestaciones.Turno;
 
@@ -88,20 +90,32 @@ public class Auxiliar {
 	}
 
 	public static Object menuo(String texto, String titulo, String [] array) {
-		Object o = JOptionPane.showInputDialog(null, texto, titulo + "  - Unpaz - POO", JOptionPane.QUESTION_MESSAGE,null, array, array[0]);
+		MyIcon icon = new MyIcon();
+		Object o = JOptionPane.showInputDialog(null, texto, titulo + "  - Unpaz - POO", JOptionPane.QUESTION_MESSAGE,icon, array, array[0]);
 		return o;
 	}
 	
 	public static int n (Object o){ 
 		int n = 0;
     	String a = (String) o;
+    	if(a==null) {
+    		Menu.display();
+    	}
     	n = Integer.parseInt(a.substring(0, a.indexOf(" ")));
 		return n;
 	} 
 	
 	public static String menus(String texto, String pordefecto) {
-		 
-		return JOptionPane.showInputDialog(texto, pordefecto);
+		MyIcon icon = new MyIcon();
+		
+		Object o = JOptionPane.showInputDialog(null, texto , "TPOO Clinica - Grupo 6" , JOptionPane.INFORMATION_MESSAGE,icon, null, pordefecto);        
+		
+		if(o==null) Menu.display();
+		
+		String r = o.toString();
+		
+		return r;
+		//return JOptionPane.showInputDialog(texto, pordefecto, icon);
 	}
 
 	public static String hoyString() {
@@ -111,7 +125,8 @@ public class Auxiliar {
 	}
 	
 	public static void advertencia(String texto, String titulo) {
-		JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE);
+		MyIcon icon = new MyIcon();
+		JOptionPane.showMessageDialog(null, texto, titulo, JOptionPane.INFORMATION_MESSAGE, icon);
 	}
 	
 }

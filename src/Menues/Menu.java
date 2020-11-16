@@ -18,7 +18,7 @@ public class Menu {
 	public static void display() {
         
         String mensajeOpciones = "Menu Clinica: \n\n1) - Turnos \n2) - Prestacion \n3) - Pacientes \n4) - Medicos "
-        		+ "\n5) - Especialidad \n6) - Area \n7) - Reportes \n8) - Ayuda \n0) - Salir \n\nSeleccione opcion:";
+        		+ "\n5) - Especialidad \n6) - Area \n7) - Reportes \n8) - Ayuda \n0) - Salir\n\nSeleccione opcion:";
         while (true) {
         	String[] opciones = {"1 - Turnos", "2 - Prestacion", "3 - Pacientes", "4 - Medicos", "5 - Especialidad", "6 - Area", "7 - Reportes", "8 - Ayuda", "0 - Salir"};
 

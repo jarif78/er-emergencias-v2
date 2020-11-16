@@ -44,7 +44,11 @@ public class menuMedico extends Menu {
                 	r = true;
                 	dni = 0;
             		while(r) {
-            			dni = Integer.parseInt(Auxiliar.menus("Ingrese numero de DNI del Medico.\n\nDebe ingresarse el numero entero sin .(punto) ni , (coma):", "12345678"));
+            			String dnis = Auxiliar.menus("Ingrese numero de DNI del Medico.\n\nDebe ingresarse el numero entero sin .(punto) ni , (coma):", "12345678");
+            			if(dnis == null) {
+            				Menu.display();
+            			}
+            			dni = Integer.parseInt(dnis);
             			r = !Medico.existeDNIPaciente(dni);
             			if(r)Auxiliar.advertencia("El DNI no es correcto, intente nuevamente", "Ingreso turno - Error DNI no dado de alta");
             		}

@@ -2,17 +2,18 @@ import javax.swing.JOptionPane;
 
 import BaseClinica.*;
 import Menues.Menu;
+import Menues.MyIcon;
 import Prestaciones.Turno;
 
 public class Inicio {
 
 	@SuppressWarnings("null")
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		MyIcon icon = new MyIcon();
 		
 		JOptionPane.showMessageDialog(null, "Bienvenido!\n\nMateria: Programacion Orientada a Objetos\n\nTrabajo Practico de programa Clinica - UNPAZ                                     "
-				+ "\n\n\nProfesor: Ing. Lucas Guaycochea\nProfesor: Lic. Cristian Ciarallo\n\nAlumno: Anahi Aguirre\nAlumno: Ariel Fernandez\nAlumno: Ricardo Gonzalez\nAlumno: Walter Suarez\n\n",
-				"TP-POO - Programa clinica", JOptionPane.INFORMATION_MESSAGE);
+				+ "\n\n\nProfesor: Ing. Lucas Guaycochea\nProfesor: Lic. Cristian Ciarallo\n\nAlumno: Anahi Aguirre\nAlumno: Ariel Fernandez\nAlumno: Ricardo Gonzalez\n\n",
+				"TP-POO - Programa clinica", JOptionPane.INFORMATION_MESSAGE, icon);
 
 		Clinica unpaz = new Clinica();
 		Paciente.setC(unpaz);

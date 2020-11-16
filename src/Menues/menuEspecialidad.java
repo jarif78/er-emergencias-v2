@@ -17,7 +17,7 @@ public class menuEspecialidad extends Menu {
 	public static void display() {
 		
         int opcion;
-        String mensajeOpciones = "Menu Especialidad: \n\n1) Alta \n2) Baja \n3) Listado Especialidades \n4) Informacion Especialidad \n0) Salir";
+        String mensajeOpciones = "Menu Especialidad: \n\n1) Alta \n2) Baja \n3) Listado Especialidades \n4) Informacion Especialidad \n0) Salir\n\n";
         String[] array = {"1 - Alta Especialidad", "2 - Baja Especialidad", "3 - Listado Especialidad", "4 - Informacion Especialidad", "0 - Salir"};
 
         while (true) {

@@ -8,7 +8,7 @@ public class menuReportes extends Menu {
 	public static void display() {
 		
         int opcion;
-        String mensajeOpciones = "Menu Reportes: \n\n1) Prestaciones por medico \n2) Estudios Realizados \n0) Salir";
+        String mensajeOpciones = "Menu Reportes: \n\n1) Prestaciones por medico \n2) Estudios Realizados \n0) Salir\n\n";
         String[] array = {"1 - Prestaciones por medico", "2 - Estudios Realizados", "0 - Salir"};
 
         while (true) {

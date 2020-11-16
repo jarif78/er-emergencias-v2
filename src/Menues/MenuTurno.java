@@ -45,6 +45,9 @@ public class MenuTurno extends Menu {
             		boolean r = true;
             		while(r) {
             			String f = Auxiliar.menus(tex, Auxiliar.hoyString());
+            			if(f==null) {
+            				Menu.display();
+            			}
             			r =controlFecha(f, e);
             			if(!r) r = !fechaMayorAhoy(f);
 
